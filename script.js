@@ -1,4 +1,5 @@
 const mainGridContainerElement = document.getElementById('main-grid');
+const clearGridButtonElement = document.getElementById('clear-button');
 
 const squareClass = 'square';
 const squareHoveredClass = 'square-hovered';
@@ -35,5 +36,18 @@ function setHoverClass(e) {
     const currentTarget = e.target;
     currentTarget.classList.add(squareHoveredClass);
 }
+
+//for all divs with class square-hovered, remove class to return div to original color; this essentially "clears" the grid
+function clearGrid() {
+    const squareHoveredDivElementsList = document.querySelectorAll(
+        '.' + squareHoveredClass
+    );
+
+    squareHoveredDivElementsList.forEach((element) => {
+        element.classList.remove(squareHoveredClass);
+    });
+}
+
+clearGridButtonElement.addEventListener('click', clearGrid);
 
 startGrid();
