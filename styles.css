@@ -15,6 +15,11 @@ main {
     background-color: white;
 }
 
+#controls {
+    display: flex;
+    flex-flow: row-reverse;
+}
+
 .grid-row {
     display: flex;
 }
