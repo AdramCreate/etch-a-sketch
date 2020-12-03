@@ -20,7 +20,6 @@ main {
 }
 
 h1 {
-    text-transform: uppercase;
     text-decoration: underline;
 }
 
@@ -36,6 +35,21 @@ h1 {
 
 #current-grid-size-header {
     margin: 0;
+}
+
+#color-modes-section {
+    display: flex;
+    align-items: baseline;
+    white-space: nowrap;
+    float: right;
+}
+
+#color-modes-section > div {
+    display: inline-block;
+}
+
+#color-modes-control-div {
+    margin-left: 10px;
 }
 
 .grid-row {
