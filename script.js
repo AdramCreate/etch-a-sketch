@@ -57,16 +57,46 @@ function clearGrid() {
     });
 }
 
-function resizeGrid() {
-    squaresPerSide = Number(
-        window.prompt('Enter a number to be the new grid size.')
+function startResizeGridPrompt() {
+    const promptInput = window.prompt(
+        'Enter a number between 1 and 100 to be the new grid size.'
     );
+
+    if (promptInput === null) {
+        return;
+    }
+
+    handleResizeGridPromptInput(promptInput);
+}
+
+function handleResizeGridPromptInput(promptInput) {
+    const newSquaresPerSide = Number(promptInput);
+
+    if (
+        Number.isNaN(newSquaresPerSide) ||
+        !(newSquaresPerSide >= 1 && newSquaresPerSide <= 100)
+    ) {
+        alertInvalidResizeGridPromptInput();
+    } else {
+        resizeGrid(newSquaresPerSide);
+    }
+}
+
+function alertInvalidResizeGridPromptInput() {
+    window.alert(
+        'Invalid input detected. Input must be a number that is between 1 and 100.'
+    );
+    startResizeGridPrompt();
+}
+
+function resizeGrid(newSquaresPerSide) {
+    squaresPerSide = newSquaresPerSide;
     mainGridContainerElement.innerHTML = '';
     clearGrid();
     startGrid();
 }
 
 clearGridButtonElement.addEventListener('click', clearGrid);
-resizeGridButtonElement.addEventListener('click', resizeGrid);
+resizeGridButtonElement.addEventListener('click', startResizeGridPrompt);
 
 startGrid();
