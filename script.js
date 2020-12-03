@@ -1,18 +1,32 @@
-let squaresPerSide = 16;
-
+const COLOR_MODES = {
+    NORMAL: 'normal',
+    RGB: 'rgb',
+    BLACK: 'black',
+};
 const mainGridContainerElement = document.getElementById('main-grid');
 const clearGridButtonElement = document.getElementById('clear-button');
 const resizeGridButtonElement = document.getElementById('resize-button');
 const currentGridSizeHeaderElement = document.getElementById(
     'current-grid-size-header'
 );
+const normalColorModeButtonElement = document.getElementById(
+    'normal-color-mode-button'
+);
+const rgbColorModeButtonElement = document.getElementById(
+    'random-rgb-color-mode-button'
+);
+const blackColorModeButtonElement = document.getElementById(
+    'black-color-mode-button'
+);
 
 const squareClass = 'square';
-const squareHoveredClass = 'square-hovered';
+const squareHoveredNormalColorModeClass = 'square-hovered-normal';
 
 const GRID_SIZE = 500;
 
-//create a 16x16 grid of square divs
+let squaresPerSide = 16;
+let currentColorMode = COLOR_MODES.NORMAL;
+
 function startGrid() {
     for (let i = 0; i < squaresPerSide; i++) {
         const newRow = getRow();
@@ -38,26 +52,32 @@ function getSquare() {
     newSquare.classList.add(squareClass);
     newSquare.style.height = squareSize + 'px';
     newSquare.style.width = squareSize + 'px';
-    newSquare.addEventListener('mouseenter', function (e) {
-        setHoverClass(e);
-    });
+    setElementColorMode(newSquare);
     return newSquare;
 }
 
-function setHoverClass(e) {
-    const currentTarget = e.target;
-    currentTarget.classList.add(squareHoveredClass);
+function setElementColorMode(element) {
+    switch (currentColorMode) {
+        case COLOR_MODES.RGB:
+            break;
+        case COLOR_MODES.BLACK:
+            break;
+        case COLOR_MODES.NORMAL:
+        default:
+            element.addEventListener('mouseenter', function (e) {
+                setHoverActionForNormalColorMode(e);
+            });
+            break;
+    }
 }
 
-//for all divs with class square-hovered, remove class to return div to original color; this essentially "clears" the grid
-function clearGrid() {
-    const squareHoveredDivElementsList = document.querySelectorAll(
-        '.' + squareHoveredClass
-    );
+function setHoverActionForNormalColorMode(e) {
+    const currentTarget = e.target;
+    currentTarget.classList.add(squareHoveredNormalColorModeClass);
+}
 
-    squareHoveredDivElementsList.forEach((element) => {
-        element.classList.remove(squareHoveredClass);
-    });
+function clearGrid() {
+    mainGridContainerElement.innerHTML = '';
 }
 
 function startResizeGridPrompt() {
@@ -94,18 +114,34 @@ function alertInvalidResizeGridPromptInput() {
 
 function resizeGrid(newSquaresPerSide) {
     squaresPerSide = newSquaresPerSide;
-    mainGridContainerElement.innerHTML = '';
-    clearGrid();
-    startGrid();
-    setCurrentGridSizeInformation();
+    resetGrid();
 }
 
 function setCurrentGridSizeInformation() {
     currentGridSizeHeaderElement.textContent = `${squaresPerSide}x${squaresPerSide}`;
 }
 
-clearGridButtonElement.addEventListener('click', clearGrid);
+function resetGrid() {
+    clearGrid();
+    startGrid();
+    setCurrentGridSizeInformation();
+}
+
+function setNewColorModeForGrid(colorMode) {
+    currentColorMode = colorMode;
+}
+
+clearGridButtonElement.addEventListener('click', resetGrid);
 resizeGridButtonElement.addEventListener('click', startResizeGridPrompt);
+normalColorModeButtonElement.addEventListener('click', function () {
+    setNewColorModeForGrid(COLOR_MODES.NORMAL);
+});
+rgbColorModeButtonElement.addEventListener('click', function () {
+    setNewColorModeForGrid(COLOR_MODES.RGB);
+});
+blackColorModeButtonElement.addEventListener('click', function () {
+    setNewColorModeForGrid(COLOR_MODES.BLACK);
+});
 
 startGrid();
 setCurrentGridSizeInformation();
