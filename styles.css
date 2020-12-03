@@ -15,9 +15,27 @@ main {
     background-color: white;
 }
 
+#main-header {
+    text-align: center;
+}
+
+h1 {
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+#top-bar {
+    display: flex;
+    justify-content: space-between;
+}
+
 #controls {
     display: flex;
     align-items: flex-end;
+}
+
+#current-grid-size-header {
+    margin: 0;
 }
 
 .grid-row {

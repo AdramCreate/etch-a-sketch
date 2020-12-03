@@ -3,6 +3,9 @@ let squaresPerSide = 16;
 const mainGridContainerElement = document.getElementById('main-grid');
 const clearGridButtonElement = document.getElementById('clear-button');
 const resizeGridButtonElement = document.getElementById('resize-button');
+const currentGridSizeHeaderElement = document.getElementById(
+    'current-grid-size-header'
+);
 
 const squareClass = 'square';
 const squareHoveredClass = 'square-hovered';
@@ -94,9 +97,15 @@ function resizeGrid(newSquaresPerSide) {
     mainGridContainerElement.innerHTML = '';
     clearGrid();
     startGrid();
+    setCurrentGridSizeInformation();
+}
+
+function setCurrentGridSizeInformation() {
+    currentGridSizeHeaderElement.textContent = `${squaresPerSide}x${squaresPerSide}`;
 }
 
 clearGridButtonElement.addEventListener('click', clearGrid);
 resizeGridButtonElement.addEventListener('click', startResizeGridPrompt);
 
 startGrid();
+setCurrentGridSizeInformation();
