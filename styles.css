@@ -17,16 +17,11 @@ main {
 
 #controls {
     display: flex;
-    flex-flow: row-reverse;
+    align-items: flex-end;
 }
 
 .grid-row {
     display: flex;
-}
-
-.square {
-    height: 50px;
-    width: 50px;
 }
 
 .square-hovered {
