@@ -22,6 +22,7 @@ const blackColorModeButtonElement = document.getElementById(
 const squareClass = 'square';
 const squareHoveredNormalColorModeClass = 'square-hovered-normal';
 const squareHoveredRgbColorModeClass = 'square-hovered-rgb';
+const squareHoveredBlackColorModeClass = 'square-hovered-black';
 
 const GRID_SIZE = 500;
 
@@ -65,8 +66,10 @@ function setElementColorMode(element) {
             });
             break;
         case COLOR_MODES.BLACK:
+            element.setAttribute('data-current-brightness', 100);
+            element.classList.add(squareHoveredBlackColorModeClass);
             element.addEventListener('mouseenter', function (e) {
-                //TODO: Have each pass add 10% of black to backgroundColor of e.target; finally after about 10 passes the square should be completely black
+                setBlackBackgroundColor(e.target);
             });
             break;
         case COLOR_MODES.NORMAL:
@@ -156,6 +159,25 @@ function setRandomBackgroundColor(element) {
         element.style.backgroundColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
         element.classList.add(squareHoveredRgbColorModeClass);
     }
+}
+
+function setBlackBackgroundColor(element) {
+    const currentElementBrightness = parseInt(
+        element.getAttribute('data-current-brightness')
+    );
+
+    if (currentElementBrightness > 0) {
+        reduceElementBrightness(element);
+    }
+}
+
+//reduces brightness by 10%; finally after about 10 passes the square should be completely black
+function reduceElementBrightness(element) {
+    const newElementBrightness =
+        parseInt(element.getAttribute('data-current-brightness')) - 10;
+
+    element.style.filter = `brightness(${newElementBrightness}%)`;
+    element.setAttribute('data-current-brightness', newElementBrightness);
 }
 
 clearGridButtonElement.addEventListener('click', resetGrid);
