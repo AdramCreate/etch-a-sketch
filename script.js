@@ -9,6 +9,9 @@ const resizeGridButtonElement = document.getElementById('resize-button');
 const currentGridSizeHeaderElement = document.getElementById(
     'current-grid-size-header'
 );
+const currentColorModeHeaderElement = document.getElementById(
+    'current-color-mode-header'
+);
 const normalColorModeButtonElement = document.getElementById(
     'normal-color-mode-button'
 );
@@ -38,6 +41,8 @@ function startGrid() {
         }
         mainGridContainerElement.appendChild(newRow);
     }
+    setCurrentGridSizeInformation();
+    setCurrentColorModeInformation();
 }
 
 function getRow() {
@@ -132,10 +137,13 @@ function setCurrentGridSizeInformation() {
     currentGridSizeHeaderElement.textContent = `${squaresPerSide}x${squaresPerSide}`;
 }
 
+function setCurrentColorModeInformation() {
+    currentColorModeHeaderElement.textContent = currentColorMode;
+}
+
 function resetGrid() {
     clearGrid();
     startGrid();
-    setCurrentGridSizeInformation();
 }
 
 function setNewColorModeForGrid(colorMode) {
@@ -193,4 +201,3 @@ blackColorModeButtonElement.addEventListener('click', function () {
 });
 
 startGrid();
-setCurrentGridSizeInformation();

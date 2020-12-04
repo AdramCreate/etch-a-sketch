@@ -39,16 +39,20 @@ h1 {
 
 #color-modes-section {
     display: flex;
+    justify-content: space-between;
+}
+#color-mode-controls-div {
+    display: flex;
     align-items: baseline;
     white-space: nowrap;
-    float: right;
+    /* float: right; */
 }
 
-#color-modes-section > div {
+#color-mode-controls-div > div {
     display: inline-block;
 }
 
-#color-modes-control-div {
+#color-modes-buttons-div {
     margin-left: 10px;
 }
 
@@ -62,4 +66,9 @@ h1 {
 
 .square-hovered-black {
     background-color: white;
+}
+
+#current-color-mode-header {
+    text-transform: capitalize;
+    /* float: left; */
 }
