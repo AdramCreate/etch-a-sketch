@@ -21,6 +21,7 @@ const blackColorModeButtonElement = document.getElementById(
 
 const squareClass = 'square';
 const squareHoveredNormalColorModeClass = 'square-hovered-normal';
+const squareHoveredRgbColorModeClass = 'square-hovered-rgb';
 
 const GRID_SIZE = 500;
 
@@ -59,21 +60,28 @@ function getSquare() {
 function setElementColorMode(element) {
     switch (currentColorMode) {
         case COLOR_MODES.RGB:
+            element.addEventListener('mouseenter', function (e) {
+                setRandomBackgroundColor(e.target);
+            });
             break;
         case COLOR_MODES.BLACK:
+            element.addEventListener('mouseenter', function (e) {
+                //TODO: Have each pass add 10% of black to backgroundColor of e.target; finally after about 10 passes the square should be completely black
+            });
             break;
         case COLOR_MODES.NORMAL:
         default:
             element.addEventListener('mouseenter', function (e) {
-                setHoverActionForNormalColorMode(e);
+                setHoverActionForNormalColorMode(e.target);
             });
             break;
     }
 }
 
-function setHoverActionForNormalColorMode(e) {
-    const currentTarget = e.target;
-    currentTarget.classList.add(squareHoveredNormalColorModeClass);
+function setHoverActionForNormalColorMode(element) {
+    if (!element.classList.contains(squareHoveredNormalColorModeClass)) {
+        element.classList.add(squareHoveredNormalColorModeClass);
+    }
 }
 
 function clearGrid() {
@@ -129,6 +137,25 @@ function resetGrid() {
 
 function setNewColorModeForGrid(colorMode) {
     currentColorMode = colorMode;
+    resetGrid();
+}
+
+// Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); //Both the min and max are inclusive
+}
+
+function setRandomBackgroundColor(element) {
+    if (!element.classList.contains(squareHoveredRgbColorModeClass)) {
+        const redValue = getRandomInt(0, 255);
+        const greenValue = getRandomInt(0, 255);
+        const blueValue = getRandomInt(0, 255);
+
+        element.style.backgroundColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+        element.classList.add(squareHoveredRgbColorModeClass);
+    }
 }
 
 clearGridButtonElement.addEventListener('click', resetGrid);
